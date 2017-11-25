@@ -18,7 +18,7 @@ const sign = (i) => {
 const getIntensity = () => {
   const sum = freqs.reduce((acc, f, i) => acc + f)
   const mean = sum / freqs.length
-  return mean / (256 * 5)
+  return mean / (256 * 10)
 }
 
 const getTheta = () => {
