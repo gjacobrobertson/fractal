@@ -9849,7 +9849,7 @@ var getIntensity = function getIntensity() {
     return acc + f;
   });
   var mean = sum / freqs.length;
-  return mean / (256 * 5);
+  return mean / (256 * 10);
 };
 
 var getTheta = function getTheta() {
