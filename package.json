@@ -16,9 +16,7 @@
     "webpack-dev-server": "^2.9.4",
     "worker-loader": "^1.1.0"
   },
-  "dependencies": {
-    "complex.js": "^2.0.4"
-  },
+  "dependencies": {},
   "scripts": {
     "start": "webpack-dev-server -d",
     "build": "webpack"
