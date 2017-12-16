@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: path.resolve('./src/index.js'),
+  entry: path.resolve('./src/js/index.js'),
   output: {
     path: path.resolve('./docs'),
     filename: 'index_bundle.js'
@@ -23,6 +23,10 @@ module.exports = {
       {
         test: /\.worker\.js$/,
         use: { loader: 'worker-loader' }
+      },
+      {
+        test: /\.glsl$/,
+        loader: 'raw-loader'
       },
       {
         test: /\.css$/,
