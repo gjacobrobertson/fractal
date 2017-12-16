@@ -23,6 +23,7 @@ export default class Renderer {
     const shader = this.gl.createShader(type)
     this.gl.shaderSource(shader, source)
     this.gl.compileShader(shader)
+    console.log(this.gl.getShaderInfoLog(shader))
     return shader
   }
 
@@ -48,20 +49,24 @@ export default class Renderer {
   }
 
   _initUniforms () {
-    this.kernelLocation = this.gl.getUniformLocation(this.program, 'uKernel')
-    this.hueLocation = this.gl.getUniformLocation(this.program, 'uHue')
-    this.centerLocation = this.gl.getUniformLocation(this.program, 'uCenter')
-    this.scaleLocation = this.gl.getUniformLocation(this.program, 'uScale')
-    this.gl.uniform2fv(this.centerLocation, center)
-    this.gl.uniform2fv(this.scaleLocation, scale)
+    this._locations = {
+      kernel: this.gl.getUniformLocation(this.program, 'uKernel'),
+      hue: this.gl.getUniformLocation(this.program, 'uHue'),
+      center: this.gl.getUniformLocation(this.program, 'uCenter'),
+      scale: this.gl.getUniformLocation(this.program, 'uScale'),
+      iterations: this.gl.getUniformLocation(this.program, 'uIterations')
+    }
+    this.gl.uniform2fv(this._locations.center, center)
+    this.gl.uniform2fv(this._locations.scale, scale)
   }
 
-  draw (kernel, hue) {
+  draw ({kernel, hue, iterations}) {
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0)
     this.gl.clear(this.gl.COLOR_BUFFER_BIT)
-    this.gl.uniform2fv(this.kernelLocation, new Float32Array(kernel))
-    this.gl.uniform1f(this.hueLocation, hue)
+    this.gl.uniform2fv(this._locations.kernel, new Float32Array(kernel))
+    this.gl.uniform1f(this._locations.hue, hue)
+    this.gl.uniform1i(this._locations.iterations, iterations)
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
   }
 }

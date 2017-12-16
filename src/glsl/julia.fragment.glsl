@@ -8,16 +8,18 @@ struct EscapeTime {
 
 const float logBase = 1.0 / log(2.0);
 const float logHalfBase = log(0.5) * logBase;
-const int iterations = 30;
+const int maxIterations = 1000;
 
 uniform vec2 uKernel;
 uniform float uHue;
+uniform int uIterations;
 
 varying vec2 vComplex;
 
 EscapeTime escape(vec2 c) {
   vec2 z = c;
-  for (int i = 0; i < iterations; i++) {
+  for (int i = 0; i < maxIterations; i++) {
+    if (i >= uIterations) { break; }
     if (length(z) > 2.0) {
       return EscapeTime(i, z, true);
     }
@@ -28,8 +30,8 @@ EscapeTime escape(vec2 c) {
 
 float smoothColor(EscapeTime et) {
   float smoothed = 5.0 + float(et.n) - logHalfBase - log(log(et.z.x * et.z.x + et.z.y * et.z.y)) * logBase;
-  // return smoothed / float(iterations);
-  return log(smoothed) / log(float(iterations));
+  // return smoothed / float(uIterations);
+  return log(smoothed) / log(float(uIterations));
 }
 
 vec3 hsv2rgb(vec3 c) {
