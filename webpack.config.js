@@ -7,7 +7,9 @@ module.exports = {
     path: path.resolve('./docs'),
     filename: 'index_bundle.js'
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [new HtmlWebpackPlugin({
+    title: 'Julia Drop'
+  })],
   module: {
     rules: [
       {
