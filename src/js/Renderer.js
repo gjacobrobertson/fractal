@@ -62,8 +62,6 @@ export default class Renderer {
 
   draw ({kernel, hue, iterations}) {
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
-    this.gl.clearColor(0.0, 0.0, 0.0, 1.0)
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT)
     this.gl.uniform2fv(this._locations.kernel, new Float32Array(kernel))
     this.gl.uniform1f(this._locations.hue, hue)
     this.gl.uniform1i(this._locations.iterations, iterations)

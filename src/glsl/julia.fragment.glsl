@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 
 struct EscapeTime {
   int n;
@@ -19,18 +19,18 @@ varying vec2 vComplex;
 EscapeTime escape(vec2 c) {
   vec2 z = c;
   for (int i = 0; i < maxIterations; i++) {
-    if (i >= uIterations) { break; }
+    if (i >= uIterations) {
+      return EscapeTime(uIterations, z, false);
+    }
     if (length(z) > 2.0) {
       return EscapeTime(i, z, true);
     }
     z = mat2(z, -z.y, z.x) * z + uKernel;
   }
-  return EscapeTime(0, z, false);
 }
 
 float smoothColor(EscapeTime et) {
-  float smoothed = 5.0 + float(et.n) - logHalfBase - log(log(et.z.x * et.z.x + et.z.y * et.z.y)) * logBase;
-  // return smoothed / float(uIterations);
+  float smoothed = 5.0 + float(et.n) - logHalfBase - log(log(dot(et.z, et.z))) * logBase;
   return log(smoothed) / log(float(uIterations));
 }
 
@@ -44,11 +44,12 @@ void main() {
   EscapeTime et = escape(vComplex);
   float c = smoothColor(et);
   float hue = uHue;
+  float value = 0.5 + (0.4 * c);
   if (et.escaped) {
     hue += c;
   } else {
     hue += 0.75;
   }
-  vec3 rgb = hsv2rgb(vec3(hue, 1.0, 0.8));
+  vec3 rgb = hsv2rgb(vec3(hue, 1.0, min(value, 0.5)));
   gl_FragColor = vec4(rgb, 1.0);
 }
