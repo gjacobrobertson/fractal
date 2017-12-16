@@ -7,13 +7,15 @@ import CycleController from './CycleController'
 import HueController from './HueController'
 import CombinedController from './CombinedController'
 import IterationsController from './IterationsController'
+import FallbackController from './FallbackController'
 
 const canvas = document.createElement('canvas')
 
 const renderer = new Renderer(canvas)
 const mouseController = new MouseController()
 const audioController = new AudioController()
-const kernelController = new CycleController(audioController, mouseController)
+const cycleController = new CycleController(audioController, mouseController)
+const kernelController = new FallbackController(cycleController, mouseController)
 const hueController = new HueController()
 const iterationsController = new IterationsController()
 const controller = new CombinedController(kernelController, hueController, iterationsController)
