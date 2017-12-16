@@ -44,12 +44,12 @@ void main() {
   EscapeTime et = escape(vComplex);
   float c = smoothColor(et);
   float hue = uHue;
-  float value = 0.5 + (0.4 * c);
+  float value = 0.6 + (0.4 * c);
   if (et.escaped) {
     hue += c;
   } else {
     hue += 0.75;
   }
-  vec3 rgb = hsv2rgb(vec3(hue, 1.0, min(value, 0.5)));
+  vec3 rgb = hsv2rgb(vec3(hue, 1.0, min(value, 0.6)));
   gl_FragColor = vec4(rgb, 1.0);
 }
