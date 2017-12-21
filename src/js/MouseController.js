@@ -1,5 +1,5 @@
 import { vec2 } from 'gl-matrix'
-import { center, scale } from './constants'
+import { center, scale } from './Renderer'
 
 const normalize = (x, scale) => (x / scale) * 2 - 1
 
@@ -14,17 +14,18 @@ export default class MouseController {
       const rect = canvas.getBoundingClientRect()
       const x = normalize(evt.clientX - rect.left, canvas.width)
       const y = -normalize(evt.clientY - rect.top, canvas.height)
-      this._target = vec2.fromValues(x, y)
+      vec2.set(this._target, x, y)
+      vec2.mul(this._target, this._target, scale)
+      vec2.add(this._target, this._target, center)
     })
   }
 
   animate (dt) {
-    const target = vec2.clone(this._target)
-    vec2.mul(target, target, scale)
-    vec2.add(target, target, center)
-    vec2.sub(target, target, this.kernel)
-    vec2.scale(target, target, dt / 500)
-    vec2.add(this.kernel, this.kernel, target)
+    const error = vec2.create()
+    const delta = vec2.create()
+    vec2.sub(error, this._target, this.kernel)
+    vec2.scale(delta, error, dt / 500)
+    vec2.add(this.kernel, this.kernel, delta)
     return { kernel: this.kernel }
   }
 }

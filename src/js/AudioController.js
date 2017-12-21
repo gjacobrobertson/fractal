@@ -1,14 +1,10 @@
 const fftSize = 256
 const pi2 = Math.PI * 2
-
-const sign = (n) => {
-  const mod = n % 2
-  return 2 * mod - 1
-}
-
 const correctionLimit = 0.8
 const correctionAlpha = 0.5
 const deltaFactor = 0.5
+
+const sign = (n) => 2 * (n % 2) - 1
 
 export default class AudioController {
   constructor () {

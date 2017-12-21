@@ -16361,15 +16361,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var fftSize = 256;
 var pi2 = Math.PI * 2;
+var correctionLimit = 0.8;
+var correctionAlpha = 0.5;
+var deltaFactor = 0.5;
 
 var sign = function sign(n) {
   var mod = n % 2;
   return 2 * mod - 1;
 };
-
-var correctionLimit = 0.8;
-var correctionAlpha = 0.5;
-var deltaFactor = 0.5;
 
 var AudioController = function () {
   function AudioController() {

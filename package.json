@@ -22,6 +22,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server -d",
-    "build": "webpack"
+    "build": "rm -rf docs/ && webpack",
+    "lint": "standard"
   }
 }
